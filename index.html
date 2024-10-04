@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Days to</title>
+    
+    <!-- Add this line for the emoji favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏳</text></svg>">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -288,6 +292,56 @@
     </footer>
 
     <script>
+        const translations = {
+            en: {
+                title: "Days to",
+                endOfYear: "End of the Year",
+                christmas: "Christmas",
+                winterTimeChange: "Winter Time Change",
+                summerTimeChange: "Summer Time Change",
+                spring: "Spring",
+                summer: "Summer",
+                autumn: "Autumn",
+                winter: "Winter",
+                days: "days",
+                hours: "hours",
+                minutes: "minutes"
+            },
+            pl: {
+                title: "Dni do",
+                endOfYear: "Końca Roku",
+                christmas: "Bożego Narodzenia",
+                winterTimeChange: "Zmiany Czasu na Zimowy",
+                summerTimeChange: "Zmiany Czasu na Letni",
+                spring: "Wiosny",
+                summer: "Lata",
+                autumn: "Jesieni",
+                winter: "Zimy",
+                days: "dni",
+                hours: "godzin",
+                minutes: "minut"
+            }
+        };
+
+        // Detect user's language
+        const userLang = navigator.language || navigator.userLanguage;
+        const lang = userLang.startsWith('pl') ? 'pl' : 'en';
+
+        // Function to get translated text
+        function t(key) {
+            return translations[lang][key] || translations['en'][key];
+        }
+
+        // Update HTML with translations
+        document.querySelector('.title-box h2').textContent = t('title');
+        document.querySelectorAll('.countdown-title').forEach(el => {
+            const key = el.textContent.toLowerCase().replace(/\s+/g, '');
+            el.textContent = t(key);
+        });
+        document.querySelectorAll('.days-value-text').forEach(el => {
+            el.textContent = t('days');
+        });
+
         function updateCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
@@ -340,6 +394,10 @@
 
             hoursElement.textContent = hours.toString().padStart(2, '0');
             minutesElement.textContent = minutes.toString().padStart(2, '0');
+            
+            // Update hours and minutes labels
+            hoursElement.nextSibling.textContent = ` ${t('hours')} `;
+            minutesElement.nextSibling.textContent = ` ${t('minutes')}`;
         }
 
         function getNextSeasonStart(now, month, day) {
