@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Days to</title>
     
-    <!-- Add this line for the emoji favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏳</text></svg>">
 
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f7f6;
             color: #333;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
 
         .title-box {
             background-color: #2e8b57;
             color: white;
-            padding: 40px 20px;
+            padding: 20px;
             width: 100%;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .title-box h2 {
@@ -38,9 +42,15 @@
             line-height: 1.2;
         }
 
+        .content-wrap {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
         .countdown-section {
             width: 100%;
-            padding: 40px 20px;
+            padding: 20px;
             box-sizing: border-box;
             text-align: center;
             border-bottom: 1px solid #ddd;
@@ -86,6 +96,14 @@
             color: #666;
         }
 
+        footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0.5; }
             to { opacity: 1; }
@@ -97,7 +115,7 @@
 
         @media (max-width: 768px) {
             .title-box {
-                padding: 30px 15px;
+                padding: 15px;
             }
 
             .title-box h2 {
@@ -105,7 +123,7 @@
             }
 
             .countdown-section {
-                padding: 30px 15px;
+                padding: 15px;
             }
 
             .countdown-title {
@@ -127,7 +145,7 @@
 
         @media (max-width: 480px) {
             .title-box {
-                padding: 25px 10px;
+                padding: 10px;
             }
 
             .title-box h2 {
@@ -135,7 +153,7 @@
             }
 
             .countdown-section {
-                padding: 25px 10px;
+                padding: 10px;
             }
 
             .countdown-title {
@@ -154,134 +172,123 @@
                 font-size: 14px;
             }
         }
-
-        footer {
-            width: 100%;
-            text-align: center;
-            padding: 10px;
-            background-color: #f0f0f0;
-            font-size: 12px;
-            color: #888;
-            box-sizing: border-box;
-            position: relative;
-            bottom: 0;
-        }
     </style>
 </head>
 <body>
-
     <div class="title-box">
         <h2>Days to</h2>
     </div>
 
-    <div class="countdown-container">
-        <div class="countdown-section">
-            <div class="countdown-title">End of the Year</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="hours"></span> hours <span id="minutes"></span> minutes
-                </div>
-            </div>
-        </div>
-
-        <!-- New Christmas countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Christmas</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="christmas-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="christmas-hours"></span> hours <span id="christmas-minutes"></span> minutes
+    <div class="content-wrap">
+        <div class="countdown-container">
+            <div class="countdown-section">
+                <div class="countdown-title">End of the Year</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="hours"></span> hours <span id="minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- DST Winter Time Change countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Winter Time Change</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="winter-time-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="winter-time-hours"></span> hours <span id="winter-time-minutes"></span> minutes
+            <!-- New Christmas countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Christmas</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="christmas-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="christmas-hours"></span> hours <span id="christmas-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- DST Summer Time Change countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Summer Time Change</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="summer-time-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="summer-time-hours"></span> hours <span id="summer-time-minutes"></span> minutes
+            <!-- DST Winter Time Change countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Winter Time Change</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="winter-time-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="winter-time-hours"></span> hours <span id="winter-time-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Spring countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Spring</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="spring-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="spring-hours"></span> hours <span id="spring-minutes"></span> minutes
+            <!-- DST Summer Time Change countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Summer Time Change</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="summer-time-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="summer-time-hours"></span> hours <span id="summer-time-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Summer countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Summer</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="summer-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="summer-hours"></span> hours <span id="summer-minutes"></span> minutes
+            <!-- Spring countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Spring</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="spring-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="spring-hours"></span> hours <span id="spring-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Autumn countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Autumn</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="autumn-days-number"></div>
-                    <div class="days-value-text">days</div>
-                </div>
-                <div class="hours-minutes">
-                    <span id="autumn-hours"></span> hours <span id="autumn-minutes"></span> minutes
+            <!-- Summer countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Summer</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="summer-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="summer-hours"></span> hours <span id="summer-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Winter countdown section -->
-        <div class="countdown-section">
-            <div class="countdown-title">Winter</div>
-            <div class="countdown-container">
-                <div class="countdown-value">
-                    <div class="days-value-number" id="winter-days-number"></div>
-                    <div class="days-value-text">days</div>
+            <!-- Autumn countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Autumn</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="autumn-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="autumn-hours"></span> hours <span id="autumn-minutes"></span> minutes
+                    </div>
                 </div>
-                <div class="hours-minutes">
-                    <span id="winter-hours"></span> hours <span id="winter-minutes"></span> minutes
+            </div>
+
+            <!-- Winter countdown section -->
+            <div class="countdown-section">
+                <div class="countdown-title">Winter</div>
+                <div class="countdown-container">
+                    <div class="countdown-value">
+                        <div class="days-value-number" id="winter-days-number"></div>
+                        <div class="days-value-text">days</div>
+                    </div>
+                    <div class="hours-minutes">
+                        <span id="winter-hours"></span> hours <span id="winter-minutes"></span> minutes
+                    </div>
                 </div>
             </div>
         </div>
@@ -447,7 +454,5 @@
         setInterval(updateCountdown, 60000);
         updateCountdown(); // Call initially to display right away
     </script>
-    
-    
 </body>
 </html>
