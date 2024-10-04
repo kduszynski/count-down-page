@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Days to</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title-box {
+            background-color: #2e8b57;
+            color: white;
+            padding: 40px 20px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+        }
+
+        .title-box h2 {
+            font-size: 56px;
+            margin: 0;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .countdown-section {
+            width: 100%;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .countdown-section:last-child {
+            border-bottom: none;
+        }
+
+        .countdown-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-value {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .days-value-number {
+            font-size: 64px;
+            font-weight: bold;
+            color: #ff4500;
+            margin-right: 10px;
+        }
+
+        .days-value-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .hours-minutes {
+            font-size: 18px;
+            color: #666;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .title-box {
+                padding: 30px 15px;
+            }
+
+            .title-box h2 {
+                font-size: 48px;
+            }
+
+            .countdown-section {
+                padding: 30px 15px;
+            }
+
+            .countdown-title {
+                font-size: 28px;
+            }
+
+            .days-value-number {
+                font-size: 56px;
+            }
+
+            .days-value-text {
+                font-size: 28px;
+            }
+
+            .hours-minutes {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title-box {
+                padding: 25px 10px;
+            }
+
+            .title-box h2 {
+                font-size: 36px;
+            }
+
+            .countdown-section {
+                padding: 25px 10px;
+            }
+
+            .countdown-title {
+                font-size: 24px;
+            }
+
+            .days-value-number {
+                font-size: 48px;
+            }
+
+            .days-value-text {
+                font-size: 24px;
+            }
+
+            .hours-minutes {
+                font-size: 14px;
+            }
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            font-size: 12px;
+            color: #888;
+            box-sizing: border-box;
+            position: relative;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-box">
+        <h2>Days to</h2>
+    </div>
+
+    <div class="countdown-container">
+        <div class="countdown-section">
+            <div class="countdown-title">End of the Year</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="hours"></span> hours <span id="minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- New Christmas countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Christmas</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="christmas-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="christmas-hours"></span> hours <span id="christmas-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- DST Winter Time Change countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Winter Time Change</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="winter-time-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="winter-time-hours"></span> hours <span id="winter-time-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- DST Summer Time Change countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Summer Time Change</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="summer-time-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="summer-time-hours"></span> hours <span id="summer-time-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- Spring countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Spring</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="spring-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="spring-hours"></span> hours <span id="spring-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- Summer countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Summer</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="summer-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="summer-hours"></span> hours <span id="summer-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- Autumn countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Autumn</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="autumn-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="autumn-hours"></span> hours <span id="autumn-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+
+        <!-- Winter countdown section -->
+        <div class="countdown-section">
+            <div class="countdown-title">Winter</div>
+            <div class="countdown-container">
+                <div class="countdown-value">
+                    <div class="days-value-number" id="winter-days-number"></div>
+                    <div class="days-value-text">days</div>
+                </div>
+                <div class="hours-minutes">
+                    <span id="winter-hours"></span> hours <span id="winter-minutes"></span> minutes
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 Countdown Page
+    </footer>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const nextYear = new Date(currentYear + 1, 0, 1);
+            let christmas = new Date(currentYear, 11, 24);
+
+            if (now > christmas) {
+                christmas = new Date(currentYear + 1, 11, 24);
+            }
+
+            const winterTimeChange = getNextWinterTimeChange(now);
+            const summerTimeChange = getNextSummerTimeChange(now);
+
+            const spring = getNextSeasonStart(now, 2, 21); // March 21
+            const summer = getNextSeasonStart(now, 5, 22); // June 22
+            const autumn = getNextSeasonStart(now, 8, 23); // September 23
+            const winter = getNextSeasonStart(now, 11, 22); // December 22
+
+            updateCountdownSection(now, nextYear, 'days-number', 'hours', 'minutes');
+            updateCountdownSection(now, christmas, 'christmas-days-number', 'christmas-hours', 'christmas-minutes');
+            updateCountdownSection(now, winterTimeChange, 'winter-time-days-number', 'winter-time-hours', 'winter-time-minutes');
+            updateCountdownSection(now, summerTimeChange, 'summer-time-days-number', 'summer-time-hours', 'summer-time-minutes');
+            
+            updateCountdownSection(now, spring, 'spring-days-number', 'spring-hours', 'spring-minutes');
+            updateCountdownSection(now, summer, 'summer-days-number', 'summer-hours', 'summer-minutes');
+            updateCountdownSection(now, autumn, 'autumn-days-number', 'autumn-hours', 'autumn-minutes');
+            updateCountdownSection(now, winter, 'winter-days-number', 'winter-hours', 'winter-minutes');
+
+            // Fade in the title box
+            document.querySelector('.title-box').classList.add('fade-in');
+            setTimeout(() => document.querySelector('.title-box').classList.remove('fade-in'), 500);
+        }
+
+        function updateCountdownSection(now, targetDate, daysId, hoursId, minutesId) {
+            const timeDiff = targetDate - now;
+
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+            const daysElement = document.getElementById(daysId);
+            const hoursElement = document.getElementById(hoursId);
+            const minutesElement = document.getElementById(minutesId);
+
+            if (daysElement.textContent !== days.toString()) {
+                daysElement.textContent = days;
+                daysElement.parentElement.parentElement.classList.add('fade-in');
+                setTimeout(() => daysElement.parentElement.parentElement.classList.remove('fade-in'), 500);
+            }
+
+            hoursElement.textContent = hours.toString().padStart(2, '0');
+            minutesElement.textContent = minutes.toString().padStart(2, '0');
+        }
+
+        function getNextSeasonStart(now, month, day) {
+            let year = now.getFullYear();
+            let date = new Date(year, month, day);
+            
+            if (now > date) {
+                date.setFullYear(year + 1);
+            }
+            
+            return date;
+        }
+
+        function getNextWinterTimeChange(now) {
+            let year = now.getFullYear();
+            let lastSundayOctober = new Date(year, 9, 31); // Start with October 31st
+            while (lastSundayOctober.getDay() !== 0) {
+                lastSundayOctober.setDate(lastSundayOctober.getDate() - 1);
+            }
+            lastSundayOctober.setHours(3, 0, 0, 0); // Set to 3:00 AM
+
+            if (now > lastSundayOctober) {
+                // If we've passed this year's change, get next year's
+                return getNextWinterTimeChange(new Date(year + 1, 0, 1));
+            }
+
+            return lastSundayOctober;
+        }
+
+        function getNextSummerTimeChange(now) {
+            let year = now.getFullYear();
+            let lastSundayMarch = new Date(year, 2, 31); // Start with March 31st
+            while (lastSundayMarch.getDay() !== 0) {
+                lastSundayMarch.setDate(lastSundayMarch.getDate() - 1);
+            }
+            lastSundayMarch.setHours(2, 0, 0, 0); // Set to 2:00 AM
+
+            if (now > lastSundayMarch) {
+                // If we've passed this year's change, get next year's
+                return getNextSummerTimeChange(new Date(year + 1, 0, 1));
+            }
+
+            return lastSundayMarch;
+        }
+
+        // Update the countdown every minute
+        setInterval(updateCountdown, 60000);
+        updateCountdown(); // Call initially to display right away
+    </script>
+    
+    
+</body>
+</html>
