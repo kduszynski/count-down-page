@@ -53,11 +53,23 @@
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
-            border-bottom: 1px solid #ddd;
+            position: relative; /* Required for positioning the pseudo-element */
         }
 
-        .countdown-section:last-child {
-            border-bottom: none;
+        .countdown-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0; /* Position it at the bottom of the section */
+            left: 50%; /* Center it horizontally */
+            transform: translateX(-50%); /* Adjust to center */
+            width: 50%; /* Adjust this value to change the width of the border */
+            max-width: 200px; /* Maximum width of the border */
+            height: 1px; /* Height of the border */
+            background-color: #ddd; /* Color of the border */
+        }
+
+        .countdown-section:last-child::after {
+            display: none; /* Remove the border from the last section */
         }
 
         .countdown-title {
